@@ -20,13 +20,29 @@ module.exports = function(RED) {
                 let sql = msg.topic;
                 let binds, options, result;
 
-                dbConfig =  {
-                    user: node.server.user,
-                    password: node.server.password,
-                    connectString : `${node.server.host}:${node.server.port}/${node.server.database}`,
-                    externalAuth  : false
-                  };
-                connection = await oracledb.getConnection(dbConfig);
+		//returns which connection to use
+		const connectionToUse = () => {
+			 const dbConfig =  {
+	                    user: node.server.user,
+	                    password: node.server.password,
+	                    connectString : `${node.server.host}:${node.server.port}/${node.server.database}`,
+	                    externalAuth  : false
+	                  };
+			 const getPassedInConfig = () => {
+				if(msg.connection) {
+					return {
+					  user: msg.connection.user ?? '',
+					  password: msg.connection.password ?? '',
+					  connectString: `${msg.connection.host ?? ''}:${msg.connection.port ?? ''}/${msg.connection.database ?? ''}`,
+					  externalAuth: false
+					};
+	
+				}
+				 else return undefined;
+			 }
+		   return getPassedInConfig() ?? dbConfig
+		}
+                connection = await oracledb.getConnection(connectionToUse());
 
                 binds = {};
 
