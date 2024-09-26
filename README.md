@@ -24,3 +24,5 @@ msg.connection = {
     database: 'orclpdb1.localdomain'
 }
 ```
+Note: in order to push credentials via `msg.connection`, it is required to create a dummy database config in the database node (temporary solution, dependency will be removed in the future).
+
