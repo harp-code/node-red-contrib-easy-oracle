@@ -11,3 +11,16 @@ If nothing is found for the query, an object with an empty rows array will be re
 
 Note: this package depends on [**node-oracledb**](https://oracle.github.io/node-oracledb) so it depends on the Oracle Instant Client that needs to be installed as a prerequisite.
 Details of installation [here](https://oracle.github.io/node-oracledb/INSTALL.html) and specifically for Linux, using zip file, [here](https://oracle.github.io/node-oracledb/INSTALL.html#instzip).
+
+### ============
+Supports now setting the connection in a previous node using `msg.connection` object
+i.e.
+```
+msg.connection = {
+    user: 'lorem',
+    password: 'ipsum',
+    host: 'localhost',
+    port: 1521,
+    database: 'orclpdb1.localdomain'
+}
+```
